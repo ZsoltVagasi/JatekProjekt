@@ -35,7 +35,7 @@ void kirajzolPalya(char** palya)
 	for (int i = 0; i < hossz; ++i) {
 		for (int j = 0; j < szel; ++j) {
 			if (palya[i][j] == '3' && (i == 0 || i == hossz - 1)) {
-				printf("-");
+				printf("_");
 			}
 			else if (palya[i][j] == '3') {
 				printf("|");
@@ -50,7 +50,7 @@ void kirajzolPalya(char** palya)
 				printf("X");
 			}
 			if (palya[i][j] == 'P') {
-				printf("P");
+				printf("O");
 			}
 		}
 		printf("\n");
@@ -73,23 +73,36 @@ void jatekMenet()
 	int elozoX, elozoY;
 	int jatekosX = 1, jatekosY = 1;
 	palya[jatekosX][jatekosY] = 'P';
-	//kirajzolPalya(palya);
 	while (1) {
 		currentTime = time(NULL);
+		printf("jobb: d\nle: s\nbal: a\nfel: w\n");
 		kirajzolPalya(palya);
-		printf("jobb: j\nle: l\n bal: b\n fel: f\n");
 		char option = getch();
 		elozoX = jatekosX;
 		elozoY = jatekosY;
-		if (option == 'j') {
+		switch (option)
+		{
+		case 'd':
 			jatekosY++;
-		}
-		else if (option == 'l') {
+			break;
+		case 's':
 			jatekosX++;
+			break;
+		case 'w':
+			jatekosX--;
+			break;
+		case 'a':
+			jatekosY--;
+			break;
 		}
 		if (palya[jatekosX][jatekosY] == '0') {
 			palya[jatekosX][jatekosY] = 'P';
 			palya[elozoX][elozoY] = '0';
+		}
+		else if (palya[jatekosX][jatekosY] == 'R')
+		{
+			printf("Grat");
+			break;
 		}
 		//Sleep(300);
 		system("CLS");

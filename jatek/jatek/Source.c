@@ -5,42 +5,27 @@
 #include <Windows.h>
 #include <time.h> 
 #include <conio.h>
+#include <string.h>
 
 int main()
 {
-	/*time_t currentTime, startTime;
-	startTime = time(NULL);
-	int index = 1;
-	char** palya;
-	palya = beolvasPalya("be.txt");
-	int elozoX, elozoY;
-	int jatekosX = 1, jatekosY = 1;
-	palya[jatekosX][jatekosY] = 'P';
-	//kirajzolPalya(palya);
-	while (1) {
-		currentTime = time(NULL);
-		kirajzolPalya(palya);
-		printf("jobb: j\nle: l\n bal: b\n fel: f\n");
-		char option = getch();
-		elozoX = jatekosX;
-		elozoY = jatekosY;
-		if (option == 'j') {
-			jatekosY++;
-		}
-		else if (option == 'l') {
-			jatekosX++;
-		}
-		if (palya[jatekosX][jatekosY] == '0') {
-			palya[jatekosX][jatekosY] = 'P';
-			palya[elozoX][elozoY] = '0';
-		}
-		//Sleep(300);
-		system("CLS");
-		//	if (currentTime - startTime > 10) {
-		//		printf("Time limit exceeded!\n Game over\n");
-		//		break;
-		//}
+	printf("Start \nExit \n");
+	char task[30];
+	scanf("%[^\n]", task);
+	char aux[30];
+	for (int i = 0; i < strlen(task); i++)
+	{
+		aux[i] = toupper(task[i]);
 	}
-	return(0);*/
-	jatekMenet();
+	if (strstr(aux, "START"))
+	{
+		//Start game 
+		jatekMenet();
+	}
+	else if (strstr(aux, "EXIT"))
+	{
+		//Exit Game 
+		printf("Exit Game");
+		return 0;
+	}
 }
