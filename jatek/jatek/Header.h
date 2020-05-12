@@ -15,6 +15,7 @@ char** beolvasPalya(const char* fajlNev);
 void kirajzolPalya(char** palya);
 char** generalPalya(char** palya);
 void jatekMenet();
+void jatekVege();
 
 
 #endif // !1
