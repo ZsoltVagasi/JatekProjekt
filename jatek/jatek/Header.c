@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <time.h> 
 #include <conio.h>
+#include <time.h>
 
 int hossz, szel;
 
@@ -50,7 +51,7 @@ void kirajzolPalya(char** palya)
 				printf("X");
 			}
 			if (palya[i][j] == 'P') {
-				printf("O");
+				printf("%c", 248);
 			}
 			if(palya[i][j] == '4')
 				printf("%c", 201);
@@ -60,7 +61,8 @@ void kirajzolPalya(char** palya)
 				printf("%c", 188);
 			if (palya[i][j] == '7')
 				printf("%c", 200);
-
+			if (palya[i][j] == 'G')
+				printf("G");
 
 		}
 		printf("\n");
@@ -68,26 +70,56 @@ void kirajzolPalya(char** palya)
 	//system("pause");
 }
 
-char** generalPalya(char** palya)
+void startGame()
 {
-	return NULL;
+	printf("Start \nExit \n");
+	char task[30];
+	scanf("%s", task);
+	char aux[30];
+	for (int i = 0; i < strlen(task); i++)
+	{
+		aux[i] = toupper(task[i]);
+	}
+	if (strstr(aux, "START"))
+	{
+		//Start game 
+		jatekMenet(1);
+	}
+	else if (strstr(aux, "EXIT"))
+	{
+		//Exit Game 
+		printf("Exit Game");
+		exit(1);
+	}
 }
 
-void jatekMenet()
+void jatekMenet(int level)
 {
 	system("cls");
-	time_t currentTime, startTime;
-	startTime = time(NULL);
+	/*time_t currentTime, startTime;
+	startTime = time(NULL);*/
 	int index = 1;
 	char** palya;
 	palya = beolvasPalya("be.txt");
+	switch (level)
+	{
+	case 1:
+		palya = beolvasPalya("be.txt");
+		break;
+	case 2:
+		palya = beolvasPalya("be2.txt");
+		break;
+	default:
+		printf("asd");
+		break;
+	}
 	int elozoX, elozoY;
 	int jatekosX = 1, jatekosY = 1;
 	palya[jatekosX][jatekosY] = 'P';
 	while (1) {
-		currentTime = time(NULL);
-		//printf("jobb: d\nle: s\nbal: a\nfel: w\n");
+		//currentTime = time(NULL);
 		printf("Pause: P\n");
+		printf("\tLevel %i\n",level + 1);
 		kirajzolPalya(palya);
 		char option = getch();
 		elozoX = jatekosX;
@@ -121,20 +153,46 @@ void jatekMenet()
 		}
 		else if (palya[jatekosX][jatekosY] == 'R')
 		{
-			jatekVege();
-			break;
+			goto endgame;
 		}
 		//Sleep(300);
 		system("CLS");
-		//	if (currentTime - startTime > 10) {
+		//	if (currentTime - startTime > 10) 
+		//		{
 		//		printf("Time limit exceeded!\n Game over\n");
 		//		break;
-		//}
+		//		}
 	}
-}
-
-void jatekVege()
-{
-	system("cls");
-	printf("Teljesitett jatek\n");
+endgame: 
+	level++;
+	char* text = (char*)calloc(50, sizeof(char));
+	char* aux = (char*)calloc(50, sizeof(char));
+	system("CLS");
+	if (level <= 3)
+	{
+		printf("	Next level\n");
+	}
+	else
+	{
+		printf("	Teljesitett jatek\n");
+	}
+	printf("	New Game\n");
+	printf("	Return home\n");
+	scanf("%s", text);
+	for (int i = 0; i < strlen(text); i++)
+	{
+		aux[i] = toupper(text[i]);
+	}
+	if (strstr(aux, "NEXT"))
+	{
+		jatekMenet(level);
+	}
+	else if (strstr(aux, "NEW"))
+	{
+		jatekMenet(1);
+	}
+	else if (strstr(aux, "RETURN"))
+	{
+		startGame();
+	}
 }

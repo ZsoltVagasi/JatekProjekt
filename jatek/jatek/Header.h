@@ -13,9 +13,7 @@
 
 char** beolvasPalya(const char* fajlNev);
 void kirajzolPalya(char** palya);
-char** generalPalya(char** palya);
-void jatekMenet();
-void jatekVege();
-
+void jatekMenet(int level);
+void startGame();
 
 #endif // !1
