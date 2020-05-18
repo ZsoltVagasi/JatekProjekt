@@ -7,8 +7,8 @@
 #include <conio.h>
 #include <time.h>
 
-int hossz, szel;
-
+int hossz, szel, counter;
+int record[3] = {999,999,999};
 char** beolvasPalya(const char* fajlNev)
 {
 	
@@ -61,9 +61,8 @@ void kirajzolPalya(char** palya)
 				printf("%c", 188);
 			if (palya[i][j] == '7')
 				printf("%c", 200);
-			if (palya[i][j] == 'G')
-				printf("G");
-
+			if (palya[i][j] == '9')
+				printf("%c", 178);
 		}
 		printf("\n");
 	}
@@ -72,8 +71,8 @@ void kirajzolPalya(char** palya)
 
 void startGame()
 {
-	printf("Start \nExit \n");
-	char task[30];
+	printf("Start \nLevels \nExit \n");
+	char task[30],lev;
 	scanf("%s", task);
 	char aux[30];
 	for (int i = 0; i < strlen(task); i++)
@@ -85,6 +84,25 @@ void startGame()
 		//Start game 
 		jatekMenet(1);
 	}
+	
+	else if (strstr(aux, "LEVELS"))
+	{
+		//Show the levels
+		printf("\t1. \n\t2. \n\t3. \n");
+		lev = getch();
+		switch (lev)
+		{
+		case '1':
+			jatekMenet(1);
+			break;
+		case '2':
+			jatekMenet(2);
+			break;
+		case '3':
+			jatekMenet(3);
+			break;
+		}
+	}
 	else if (strstr(aux, "EXIT"))
 	{
 		//Exit Game 
@@ -95,9 +113,8 @@ void startGame()
 
 void jatekMenet(int level)
 {
+	
 	system("cls");
-	/*time_t currentTime, startTime;
-	startTime = time(NULL);*/
 	int index = 1;
 	char** palya;
 	palya = beolvasPalya("be.txt");
@@ -109,17 +126,19 @@ void jatekMenet(int level)
 	case 2:
 		palya = beolvasPalya("be2.txt");
 		break;
+	case 3:
+		palya = beolvasPalya("be3.txt");
+		break;
 	default:
 		printf("asd");
 		break;
 	}
-	int elozoX, elozoY;
+	int elozoX, elozoY,gX,gY;
 	int jatekosX = 1, jatekosY = 1;
 	palya[jatekosX][jatekosY] = 'P';
 	while (1) {
-		//currentTime = time(NULL);
-		printf("Pause: P\n");
-		printf("\tLevel %i\n",level + 1);
+		printf("Press 'E' to return to homepage \n");
+		printf("\tLevel %i\n",level);
 		kirajzolPalya(palya);
 		char option = getch();
 		elozoX = jatekosX;
@@ -128,71 +147,121 @@ void jatekMenet(int level)
 		{
 		case 'd':
 			jatekosY++;
-			if(palya[jatekosX][jatekosY]== '1' || palya[jatekosX][jatekosY] == '3')
+			if(palya[jatekosX][jatekosY]== '1' || palya[jatekosX][jatekosY] == '3' || palya[jatekosX][jatekosY] == '9')
 				jatekosY--;
 			break;
 		case 's':
 			jatekosX++;
-			if (palya[jatekosX][jatekosY] == '1' || palya[jatekosX][jatekosY] == '3')
+			if (palya[jatekosX][jatekosY] == '1' || palya[jatekosX][jatekosY] == '3' || palya[jatekosX][jatekosY] == '9')
 				jatekosX--;
 			break;
 		case 'w':
 			jatekosX--;
-			if (palya[jatekosX][jatekosY] == '1' || palya[jatekosX][jatekosY] == '3')
+			if (palya[jatekosX][jatekosY] == '1' || palya[jatekosX][jatekosY] == '3' || palya[jatekosX][jatekosY] == '9')
 				jatekosX++;
 			break;
 		case 'a':
 			jatekosY--;
-			if (palya[jatekosX][jatekosY] == '1' || palya[jatekosX][jatekosY] == '3')
+			if (palya[jatekosX][jatekosY] == '1' || palya[jatekosX][jatekosY] == '3' || palya[jatekosX][jatekosY] == '9')
 				jatekosY++;
 			break;
+		case '8':
+			gX = jatekosX - 1;
+			gY = jatekosY;
+				if (palya[gX][gY] == '9') {
+					palya[gX][gY] = '0';
+					counter++;
+				}
+				system("CLS");
+				kirajzolPalya(palya);
+			break;
+		case '5':
+			gX = jatekosX + 1;
+			gY = jatekosY;
+			if (palya[gX][gY] == '9') {
+				palya[gX][gY] = '0';
+				counter++;
+			}
+			system("CLS");
+			kirajzolPalya(palya);
+			break;
+		case '6':
+			gX = jatekosX ;
+			gY = jatekosY + 1;
+			if (palya[gX][gY] == '9') 
+			{
+				palya[gX][gY] = '0';
+				counter++;
+			}
+			system("CLS");
+			kirajzolPalya(palya);
+			break;
+		case '4':
+			gX = jatekosX ;
+			gY = jatekosY - 1;
+			if (palya[gX][gY] == '9') {
+				palya[gX][gY] = '0';
+				counter++;
+			}
+			system("CLS");
+			kirajzolPalya(palya);
+			break;
 		}
+		if (option == 'e')
+		{
+			system("cls");
+			printf("Exit pressed\n");
+			startGame();
+			//break;
+		}
+		
 		if (palya[jatekosX][jatekosY] == '0') {
 			palya[jatekosX][jatekosY] = 'P';
 			palya[elozoX][elozoY] = '0';
 		}
 		else if (palya[jatekosX][jatekosY] == 'R')
 		{
+			if (counter < record[level])
+				record[level] = counter;
+			//printf("%i kiuttessel sikerult a szint, a rekord %i\n", counter, record);
 			goto endgame;
 		}
-		//Sleep(300);
 		system("CLS");
-		//	if (currentTime - startTime > 10) 
-		//		{
-		//		printf("Time limit exceeded!\n Game over\n");
-		//		break;
-		//		}
 	}
 endgame: 
-	level++;
-	char* text = (char*)calloc(50, sizeof(char));
-	char* aux = (char*)calloc(50, sizeof(char));
-	system("CLS");
-	if (level <= 3)
 	{
-		printf("	Next level\n");
-	}
-	else
-	{
-		printf("	Teljesitett jatek\n");
-	}
-	printf("	New Game\n");
-	printf("	Return home\n");
-	scanf("%s", text);
-	for (int i = 0; i < strlen(text); i++)
-	{
-		aux[i] = toupper(text[i]);
-	}
-	if (strstr(aux, "NEXT"))
-	{
-		jatekMenet(level);
-	}
-	else if (strstr(aux, "NEW"))
-	{
-		jatekMenet(1);
-	}
-	else if (strstr(aux, "RETURN"))
-	{
-		startGame();
+		char* text = (char*)calloc(50, sizeof(char));
+		char* aux = (char*)calloc(50, sizeof(char));
+		system("CLS");
+		printf("%i kiuttessel sikerult a szint, a rekord %i\n", counter, record[level]);
+		level++;
+		if (level <= 3)
+		{
+			printf("Next level\n");
+		}
+		else
+		{
+			printf("Teljesitett jatek\n");
+		}
+		printf("New Game\n");
+		printf("Return home\n");
+		scanf("%s", text);
+		for (int i = 0; i < strlen(text); i++)
+		{
+			aux[i] = toupper(text[i]);
+		}
+		if (strstr(aux, "NEXT"))
+		{
+			counter = 0;
+			jatekMenet(level);
+		}
+		else if (strstr(aux, "NEW"))
+		{
+			jatekMenet(1);
+		}
+		else if (strstr(aux, "RETURN"))
+		{
+			startGame();
+		}
 	}
 }

@@ -16,4 +16,4 @@ void kirajzolPalya(char** palya);
 void jatekMenet(int level);
 void startGame();
 
-#endif // !1
+#endif 
