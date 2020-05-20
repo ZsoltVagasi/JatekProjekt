@@ -9,6 +9,7 @@
 
 int hossz, szel, counter;
 int record[3] = {999,999,999};
+// Palyabeolvasas
 char** beolvasPalya(const char* fajlNev)
 {
 	
@@ -30,7 +31,7 @@ char** beolvasPalya(const char* fajlNev)
 	}
 	return palya;
 }
-
+// Palyakiiras
 void kirajzolPalya(char** palya)
 {
 	for (int i = 0; i < hossz; ++i) {
@@ -68,7 +69,7 @@ void kirajzolPalya(char** palya)
 	}
 	//system("pause");
 }
-
+// a Jatek kezdete, Szintek kivalasztasa
 void startGame()
 {
 	printf("Start \nLevels \nExit \n");
@@ -110,7 +111,7 @@ void startGame()
 		exit(1);
 	}
 }
-
+// A tulajdonkeppeni jatek menete, mozgas, vagy mechanizmusok
 void jatekMenet(int level)
 {
 	
